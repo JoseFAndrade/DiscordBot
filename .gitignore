@@ -1,3 +1,4 @@
 .quotes.json
 resources/quotes.json
 Database.java
+JDAController
