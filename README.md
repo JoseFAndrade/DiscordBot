@@ -25,4 +25,5 @@ A discord bot that is going to be able to do various different things such as: p
   - Comments: There is not a lot of comments on my files which is an issue because other people should understand my functions without needing to read
       every line of code. 
   - Best Practices: The need to re-write code is extremely important because there is messy code that I write in order to get to the solution of a problem that I am facing. When I return to it, I realize that the code was written badly and needs to be revised. I have already been applying this and have reduced 
-      multiple lines of code into one function that allowed me to use it in many different parts of my code. I need to keep going through my code and finding those pieces of code that I can easily reduce. 
+      multiple lines of code into one function that allowed me to use it in many different parts of my code. I need to keep going through my code and finding those pieces of code that I can easily reduce.
+  - Version Migration: Currently trying to go from JDA 4 to JDA 5 since the project was first written with JDA 4. 
