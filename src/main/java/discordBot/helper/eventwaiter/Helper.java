@@ -5,6 +5,7 @@ package discordBot.helper.eventwaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -54,14 +55,13 @@ public class Helper {
         if(embedEventWaiterCircularArray.size() == 1)
             channel.sendMessageEmbeds(embedEventWaiterCircularArray.get().build()).queue();
         else{
-            /*TODO fix reactions
-            channel.sendMessageEmbeds(embedEventWaiterCircularArray.get().build()).queue( (message2) -> {
-                message2.addReaction("⬅️").queue();
-                message2.addReaction("➡️").queue();
-                addEmbedRotaterEventWaiter(message2,channel, embedEventWaiterCircularArray);
-            });
 
-             */
+            channel.sendMessageEmbeds(embedEventWaiterCircularArray.get().build()).queue( (message2) -> {
+                message2.addReaction(Emoji.fromUnicode("⬅️")).queue();
+                message2.addReaction(Emoji.fromUnicode("➡️")).queue();
+                addEmbedRotaterEventWaiter(message2,channel, embedEventWaiterCircularArray);
+
+            });
         }
     }
 
@@ -74,22 +74,23 @@ public class Helper {
     public static void sendEmbed(List<EmbedBuilder> embedBuilderList, MessageChannel channel){
         EmbedEventWaiterCircularArray embedEventWaiterCircularArray = new EmbedEventWaiterCircularArray(embedBuilderList);
 
-        /*TODO fix this code because the emojis code got changed so i got to fix that
+
         //If it's only one embed there is no reason to send it an Event Waiter
         if(embedEventWaiterCircularArray.size() == 1)
             channel.sendMessageEmbeds(embedEventWaiterCircularArray.get().build()).queue();
         else{
             channel.sendMessageEmbeds(embedEventWaiterCircularArray.get().build()).queue( (message2) -> {
-                message2.addReaction("⬅️").queue();
-                message2.addReaction("➡️").queue();
+                message2.addReaction(Emoji.fromUnicode("⬅️")).queue();
+                message2.addReaction(Emoji.fromUnicode("➡️")).queue();
                 addEmbedRotaterEventWaiter(message2,channel, embedEventWaiterCircularArray);
             });
-        }*/
+        }
     }
 
 
     /*TODO can possibly make it so that these two functions could be turned into an interface if I wanted to*/
 
+    /*TODO connect the database back so i can start to use it again*/
     /**
      * This function takes a name of a character and will check if there are any Alters of the character and return those options if necessary.
      * If not, then it will just continue on with the original name of the function.
@@ -156,14 +157,14 @@ public class Helper {
      * @param ebArray The CircularArray that will be used to rotate between embeds.
      */
     private static void addEmbedRotaterEventWaiter(Message message, MessageChannel channel, EmbedEventWaiterCircularArray ebArray){
-        /*TODO the emoji code got changed so I have to fix that
+
         EventWaiterSingleton.getInstance().waitForEvent(
 
                 MessageReactionAddEvent.class,
-                (e) ->   e.getMessageIdLong() == message.getIdLong() && !e.getUser().isBot() &&
-                        ( e.getReactionEmote().getEmoji().equals("➡️") || e.getReactionEmote().getEmoji().equals("⬅️")),
+                (e) -> e.getMessageIdLong() == message.getIdLong() && !e.getUser().isBot() &&
+                        ( e.getEmoji().getName().equals("➡️") || e.getEmoji().getName().equals("⬅️")),
                 (e) -> {
-                    String emote = e.getReactionEmote().getEmoji();
+                    String emote = e.getEmoji().getName();
                     if(emote.equals("⬅️"))
                     {
                         ebArray.decreaseIndex();
@@ -180,7 +181,7 @@ public class Helper {
                 () -> {}
         );
 
-         */
+
     }
 
 
